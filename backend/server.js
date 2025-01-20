@@ -1,16 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-
+import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
-const bodyParser = require('body-parser');
-const userRoutes = require('./routes/userRoutes');
-const commandRoutes = require('./routes/commandRoutes');
+import bodyParser from 'body-parser';
+import userRoutes from './routes/userRoutes.js';
+import commandRoutes from './routes/commandRoutes.js';
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
-dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/commands', commandRoutes);
 
+// Démarrage du serveur
 app.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}`);
 });
