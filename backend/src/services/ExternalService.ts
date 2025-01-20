@@ -1,9 +1,9 @@
-import { WeatherService } from './weather/WeatherService.ts';
-import { SpotifyService } from './music/SpotifyService.ts';
-import { YouTubeService } from './video/YouTubeService.ts';
-import { EmailService } from './communication/EmailService.ts';
-import { PhoneService } from './communication/PhoneService.ts';
-import { DatabaseService } from "./database/DatabaseService.ts";
+import { WeatherService } from './weather/WeatherService';
+import { SpotifyService } from './music/SpotifyService';
+import { YouTubeService } from './video/YouTubeService';
+import { EmailService } from './communication/EmailService';
+import { PhoneService } from './communication/PhoneService';
+import { DatabaseService } from "./database/DatabaseService";
 
 export class ExternalService {
   private weatherService: WeatherService;

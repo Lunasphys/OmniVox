@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 export class WeatherService {
-  private apiKey: string = 'c74c60571a4c5b091e9609c258150820';
+  private apiKey: string = process.env.WEATHER_API_KEY;
   private baseGeoUrl = 'https://api.openweathermap.org/geo/1.0/direct';
   private baseWeatherUrl = 'https://api.openweathermap.org/data/3.0/onecall';
+
 
   async getWeather(city: string): Promise<string> {
     try {

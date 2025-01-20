@@ -4,6 +4,7 @@ interface ImportMetaEnv {
     readonly VITE_DB_USER: string;
     readonly VITE_DB_PASSWORD: string;
     readonly VITE_DB_NAME: string;
+    readonly VITE_API_KEY_WEATHER: string;
 }
 
 interface ImportMeta {

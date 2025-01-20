@@ -21,3 +21,9 @@ export interface UserPreference {
   preference_value: string;
   updated_at: Date;
 }
+
+export interface WeatherData {
+  location: string;
+  temperature: number;
+  condition: string;
+}
