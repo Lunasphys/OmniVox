@@ -1,10 +1,10 @@
-import { ExternalService } from './ExternalService';
-import { WeatherService } from './weather/WeatherService';
-import { SpotifyService } from './music/SpotifyService';
-import { YouTubeService } from './video/YouTubeService';
-import { EmailService } from './communication/EmailService';
-import { PhoneService } from './communication/PhoneService';
-import { DatabaseService } from './database/DatabaseService';
+import { ExternalService } from './ExternalService.js';
+import { WeatherService } from './weather/WeatherService.js';
+import { SpotifyService } from './music/SpotifyService.js';
+import { YouTubeService } from './video/YouTubeService.js';
+import { EmailService } from './communication/EmailService.js';
+import { PhoneService } from './communication/PhoneService.js';
+import { DatabaseService } from './database/DatabaseService.js';
 
 
 

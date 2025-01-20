@@ -1,4 +1,4 @@
-import { pool } from '../model/db';
+import { pool } from '../model/db.js';
 
 export const logCommand = async (req, res) => {
     const { userId, commandText, commandType, responseText } = req.body;

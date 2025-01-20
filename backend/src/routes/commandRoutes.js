@@ -1,5 +1,5 @@
 import express from 'express';
-import { logCommand, getCommandHistory } from '../controllers/commandController.ts';
+import { logCommand, getCommandHistory } from '../controllers/commandController.js';
 
 const router = express.Router();
 

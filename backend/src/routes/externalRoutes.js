@@ -1,6 +1,6 @@
 // backend/src/routes/externalRoutes.ts
 import express from 'express';
-import externalService from '../services/ServiceFactory';
+import externalService from '../services/ServiceFactory.js';
 
 const router = express.Router();
 
