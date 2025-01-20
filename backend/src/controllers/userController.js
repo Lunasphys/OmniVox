@@ -1,6 +1,5 @@
-const pool = require('../model/db');
+import { pool } from '../model/db.js';
 
-// userController.js
 export const getUsers = async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM users');
@@ -24,6 +23,3 @@ export const addUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to add user.' });
   }
 };
-
-
-module.exports = { addUser, getUsers };
