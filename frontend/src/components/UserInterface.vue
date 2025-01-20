@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useSpeechProcessor } from '../composables/useSpeechProcessor.ts';
-import externalService from '../../../backend/src/services/ServiceFactory.js';
-import { DatabaseService } from '../../../backend/src/services/database/DatabaseService.js';
+import externalService from '../../../backend/src/services/ServiceFactory.ts';
+import { DatabaseService } from '../../../backend/src/services/database/DatabaseService.ts';
 
 const inputField = ref('');
 const result = ref('');

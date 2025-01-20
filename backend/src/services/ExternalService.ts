@@ -1,9 +1,9 @@
-import { WeatherService } from './weather/WeatherService.js';
-import { SpotifyService } from './music/SpotifyService.js';
-import { YouTubeService } from './video/YouTubeService.js';
-import { EmailService } from './communication/EmailService.js';
-import { PhoneService } from './communication/PhoneService.js';
-import { DatabaseService } from "./database/DatabaseService.js";
+import { WeatherService } from './weather/WeatherService.ts';
+import { SpotifyService } from './music/SpotifyService.ts';
+import { YouTubeService } from './video/YouTubeService.ts';
+import { EmailService } from './communication/EmailService.ts';
+import { PhoneService } from './communication/PhoneService.ts';
+import { DatabaseService } from "./database/DatabaseService.ts";
 
 export class ExternalService {
   private weatherService: WeatherService;
@@ -11,7 +11,7 @@ export class ExternalService {
   private youtubeService: YouTubeService;
   private emailService: EmailService;
   private phoneService: PhoneService;
-  private readonly databaseService: DatabaseService;
+  private databaseService: DatabaseService;
 
   constructor(
       weatherService: WeatherService,
