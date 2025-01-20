@@ -1,16 +1,16 @@
 {
-  "files": [],
-  "references": [
-    { "path": "../frontend/tsconfig.app.json"},
-    { "path": "./tsconfig.node.json"}
-  ],
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES6",
+    "module": "CommonJS",
     "moduleResolution": "node",
-    "strict": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "strict": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

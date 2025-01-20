@@ -1,9 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
-import userRoutes from './src/routes/userRoutes.ts';
-import commandRoutes from './src/routes/commandRoutes.ts';
+import userRoutes from './src/routes/userRoutes';
+import commandRoutes from './src/routes/commandRoutes';
 
 dotenv.config();
 
@@ -12,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Routes
 app.use('/api/users', userRoutes);

@@ -1,4 +1,4 @@
-import { pool } from '../model/db.js';
+import { pool } from '../model/db';
 
 export const getUsers = async (req, res) => {
   try {
