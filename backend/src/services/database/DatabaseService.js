@@ -1,9 +1,11 @@
-import axios from 'axios';
+const axios = require('axios');
 
-export class DatabaseService {
-  private apiUrl = 'http://localhost:3000/api';
+class DatabaseService {
+  constructor() {
+    this.apiUrl = 'http://localhost:30 00/api';
+  }
 
-  async addUser(username: string, email: string): Promise<number> {
+  async addUser(username, email) {
     try {
       const response = await axios.post(`${this.apiUrl}/users`, { username, email });
       return response.data.insertId;
@@ -13,7 +15,7 @@ export class DatabaseService {
     }
   }
 
-  async getUsers(): Promise<any[]> {
+  async getUsers() {
     try {
       const response = await axios.get(`${this.apiUrl}/users`);
       return response.data; // Retourne les données des utilisateurs
@@ -23,12 +25,7 @@ export class DatabaseService {
     }
   }
 
-  async logCommand(
-      userId: number,
-      commandText: string,
-      commandType: 'weather' | 'music' | 'video' | 'email' | 'phone',
-      responseText: string
-  ): Promise<void> {
+  async logCommand(userId, commandText, commandType, responseText) {
     try {
       await axios.post(`${this.apiUrl}/commands`, {
         userId,
@@ -42,7 +39,7 @@ export class DatabaseService {
     }
   }
 
-  async getCommandHistory(userId: number): Promise<any[]> {
+  async getCommandHistory(userId) {
     try {
       const response = await axios.get(`${this.apiUrl}/commands`, { params: { userId } });
       return response.data; // Retourne l'historique des commandes
@@ -52,7 +49,7 @@ export class DatabaseService {
     }
   }
 
-  async setUserPreference(userId: number, key: string, value: string): Promise<void> {
+  async setUserPreference(userId, key, value) {
     try {
       await axios.post(`${this.apiUrl}/preferences`, {
         userId,
@@ -65,7 +62,7 @@ export class DatabaseService {
     }
   }
 
-  async getUserPreference(userId: number, key: string): Promise<string | null> {
+  async getUserPreference(userId, key) {
     try {
       const response = await axios.get(`${this.apiUrl}/preferences`, { params: { userId, key } });
       return response.data?.value || null;
@@ -75,3 +72,5 @@ export class DatabaseService {
     }
   }
 }
+
+module.exports = DatabaseService;

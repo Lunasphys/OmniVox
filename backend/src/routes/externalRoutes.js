@@ -1,6 +1,5 @@
-// backend/src/routes/externalRoutes.ts
-import express from 'express';
-import externalService from '../services/ServiceFactory.ts';
+const express = require('express');
+const externalService = require('../services/ServiceFactory.js');
 
 const router = express.Router();
 
@@ -12,7 +11,7 @@ router.get('/weather', async (req, res) => {
     }
 
     try {
-        const weatherData = await externalService.getWeather(city as string);
+        const weatherData = await externalService.getWeather({ city });
         res.json({ message: weatherData });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -27,7 +26,7 @@ router.get('/spotify', async (req, res) => {
     }
 
     try {
-        const spotifyData = await externalService.searchSpotify(query as string);
+        const spotifyData = await externalService.searchSpotify({ query });
         res.json({ message: spotifyData });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -42,8 +41,24 @@ router.get('/youtube', async (req, res) => {
     }
 
     try {
-        const youtubeData = await externalService.searchYouTube(query as string);
+        const youtubeData = await externalService.searchYouTube({ query });
         res.json({ message: youtubeData });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.post('/database', async (req, res) => {
+    const { username, email } = req.body;
+
+    if (!username || !email) {
+        return res.status(400).json({ error: 'Le nom d\'utilisateur et l\'email sont requis.' });
+    }
+
+    try {
+
+        const insertId = await externalService.addUser(username, email);
+        res.status(201).json({ message: 'Utilisateur ajouté avec succès.', insertId: insertId });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -79,4 +94,4 @@ router.post('/phone', (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

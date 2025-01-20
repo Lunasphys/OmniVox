@@ -1,11 +1,12 @@
-import express from 'express';
-import { getUsers, addUser } from '../controllers/userController.js';
+// backend/src/routes/userRoutes.js
+const express = require('express');
+const { getUsers, addUser } = require('../controllers/userController.js');  // Utilisation de `require()`
 
 const router = express.Router();
 
-// Définissez vos routes ici
+// Définir les routes ici
 router.get('/', getUsers);
 router.post('/', addUser);
 
-// Export par défaut
-export default router;
+// Exportation par défaut
+module.exports = router;

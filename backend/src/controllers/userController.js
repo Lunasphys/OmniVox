@@ -1,6 +1,6 @@
-import { pool } from '../model/db.js';
+const { pool } = require('../model/db.js');
 
-export const getUsers = async (req, res) => {
+exports.getUsers = async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM users');
     res.json(rows);
@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const addUser = async (req, res) => {
+exports.addUser = async (req, res) => {
   const { username, email } = req.body;
   try {
     const [result] = await pool.query(

@@ -1,13 +1,11 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue';
-import { useSpeechProcessor } from '../composables/useSpeechProcessor.ts';
-import externalService from '../../../backend/src/services/ServiceFactory.ts';
-import { DatabaseService } from '../../../backend/src/services/database/DatabaseService.ts';
+import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
+const { externalService } = require('../../../backend/src/services/ServiceFactory.js');
 const inputField = ref('');
 const result = ref('');
 const isListening = ref(false);
-const databaseService = new DatabaseService();
 
 const { recognizeSpeech, synthesizeSpeech } = useSpeechProcessor();
 
@@ -25,7 +23,7 @@ const captureVoice = async () => {
   }
 };
 
-const processCommand = async (command: string) => {
+const processCommand = async (command) => {
   const lowerCommand = command.toLowerCase();
   let response = '';
 
@@ -73,16 +71,6 @@ const processCommand = async (command: string) => {
         response = externalService.makePhoneCall(phoneMatch[1]);
       } else {
         response = 'Please specify a phone number to call.';
-      }
-    }
-    // Database commands
-    else if (lowerCommand.includes('add user')) {
-      const userMatch = command.match(/add user (.+) with email (.+)/i);
-      if (userMatch) {
-        const userId = await databaseService.addUser(userMatch[1], userMatch[2]);
-        response = `User ${userMatch[1]} added with ID: ${userId}`;
-      } else {
-        response = 'Please specify a username and email.';
       }
     }
     // Default greeting
