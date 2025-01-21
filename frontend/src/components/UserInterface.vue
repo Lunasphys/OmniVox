@@ -13,6 +13,23 @@ const isListening = ref(false);
 
 const { recognizeSpeech, synthesizeSpeech } = useSpeechProcessor();
 
+/**
+ * An asynchronous function responsible for initiating speech recognition, processing the recognized text,
+ * and setting appropriate values based on the result of the operation.
+ * It updates the state indicating whether the application is currently listening for voice input.
+ *
+ * Workflow:
+ * 1. Activates listening state to indicate the system is listening for speech.
+ * 2. Uses a speech recognition function to capture and convert spoken words into text.
+ * 3. Sets the recognized text into an input field.
+ * 4. Processes commands based on the recognized speech using a command-processing function.
+ * 5. Handles errors encountered during speech recognition and sets a default error message in case of failure.
+ * 6. Ensures that the listening state is deactivated after completing all operations.
+ *
+ * Error Handling:
+ * Logs an error message to the console if speech recognition fails,
+ * and sets a fallback message indicating failure to understand the speech input.
+ */
 const captureVoice = async () => {
   isListening.value = true;
   try {
@@ -28,6 +45,18 @@ const captureVoice = async () => {
 };
 
 // Gestion des commandes vocales
+/**
+ * Asynchronously processes a given command and determines its response based on the command's content.
+ * The function is capable of handling commands related to weather, Spotify, YouTube, email,
+ * or providing a default response for unrecognized commands.
+ *
+ * @async
+ * @param {string} command - The user-provided command string to be processed.
+ * @returns {Promise<void>} A promise that resolves when the command processing is complete,
+ * with the result stored in the appropriate output variable.
+ * @throws Will handle any errors that occur during the processing of the command
+ * and set the output variable with an error message.
+ */
 const processCommand = async (command) => {
   const lowerCommand = command.toLowerCase();
   let response = '';

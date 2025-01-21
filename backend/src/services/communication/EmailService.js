@@ -8,6 +8,15 @@ export default class EmailService {
         this.apiEndpoint = 'https://api.emailjs.com/api/v1.0/email/send';
     }
 
+    /**
+     * Sends an email using the configured email service.
+     *
+     * @param {string} to - The recipient's email address.
+     * @param {string} subject - The subject line of the email.
+     * @param {string} message - The content of the email message.
+     * @return {Promise<string>} A promise that resolves with a success message if the email is sent successfully.
+     * @throws {Error} Throws an error if the email cannot be sent or if an API error occurs.
+     */
     async sendEmail(to, subject, message) {
         try {
             console.log('Preparing to send email:', { to, subject, message });

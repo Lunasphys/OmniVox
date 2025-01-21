@@ -7,6 +7,14 @@ class SpotifyService {
     this.accessToken = process.env.SPOTIFY_ACCESS_TOKEN;
   }
 
+  /**
+   * Retrieves an access token for Spotify API.
+   * If a valid access token already exists, it returns the existing token.
+   * Otherwise, it requests a new access token using client credentials.
+   *
+   * @return {Promise<string>} A promise that resolves to the access token string.
+   * @throws {Error} If there is an issue with the authentication process.
+   */
   async getAccessToken() {
     if (this.accessToken) return this.accessToken;
 
@@ -32,6 +40,12 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Searches for a track on Spotify using the provided query and plays the first result by opening its Spotify page in a new tab.
+   *
+   * @param {string} query The search query for the desired track.
+   * @return {Promise<string>} A promise that resolves to a message indicating the track being played, or rejects with an error if the process fails.
+   */
   async searchAndPlay(query) {
     try {
       const token = await this.getAccessToken();

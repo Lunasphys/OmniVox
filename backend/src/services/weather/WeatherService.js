@@ -7,6 +7,13 @@ class WeatherService {
     console.log('Weather API Key:', this.apiKey);
   }
 
+  /**
+   * Fetches and returns the current weather information for a given city.
+   *
+   * @param {string} city - The name of the city for which the weather data is requested.
+   * @return {Promise<string>} A promise that resolves to a string describing the weather information, including temperature, humidity, wind speed, and condition.
+   * @throws {Error} Throws an error if the weather data cannot be fetched or if it is unavailable for the given city.
+   */
   async getWeather(city) {
     try {
       console.log(`Fetching weather for city: ${city}`); // Débogage
