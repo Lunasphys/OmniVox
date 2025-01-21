@@ -2,32 +2,38 @@ import axios from 'axios';
 
 class YouTubeService {
     constructor() {
-        this.apiKey = 'AIzaSyCPG6obeaKKoR6OFYhfapnyRxe5vGezStc';
+        this.apiKey = process.env.YOUTUBE_API_KEY;
+        console.log('YouTubeService initialized with API key:', this.apiKey); // Debug
     }
 
     async searchAndPlay(query) {
         try {
-            // Effectuer une recherche sur YouTube
+            console.log(`Searching YouTube for query: ${query}`); // Log de la requête
+
             const response = await axios.get(
-                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${this.apiKey}&maxResults=1&type=video`
+                'https://www.googleapis.com/youtube/v3/search', {
+                    params: {
+                        part: 'snippet',
+                        q: query,
+                        key: this.apiKey,
+                        maxResults: 1,
+                        type: 'video',
+                    },
+                }
             );
+
+            console.log('YouTube API response:', response.data);
 
             const video = response.data.items[0];
             if (!video) {
-                throw new Error('No videos found');
+                throw new Error('No videos found for the query.');
             }
 
-            // Construire l'URL de la vidéo YouTube
             const videoUrl = `https://www.youtube.com/watch?v=${video.id.videoId}`;
-
-            // Ouvrir la vidéo dans un nouvel onglet
-            window.open(videoUrl, '_blank');
-
-            // Retourner un message de confirmation
-            return `Opening YouTube video: ${video.snippet.title}`;
+            return `Playing ${video.snippet.title}: ${videoUrl}`;
         } catch (error) {
-            console.error('YouTube API error:', error);
-            throw new Error('Could not find YouTube video');
+            console.error('YouTubeService Error:', error.response?.data || error.message); // Log détaillé
+            throw new Error('Could not find YouTube video.');
         }
     }
 }

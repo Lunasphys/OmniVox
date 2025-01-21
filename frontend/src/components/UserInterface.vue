@@ -51,6 +51,27 @@ const processCommand = async (command) => {
       } else {
         response = 'Please specify what to search on YouTube.';
       }
+    } else if (lowerCommand.includes('email') || lowerCommand.includes('send mail')) {
+      // Correspondance pour l'email
+      const emailMatch = command.match(/send (?:email|mail) to (.+) (?:with subject|about) (.+) (?:saying|with message) (.+)/i);
+      if (emailMatch) {
+        const to = emailMatch[1];
+        const subject = emailMatch[2];
+        const message = emailMatch[3];
+
+        // Appel à l'API backend pour envoyer l'email
+        const res = await fetchWithErrorHandling(`http://localhost:3000/api/email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ to, subject, message }),
+        });
+
+        response = res.message || `Email sent to ${to}.`;
+      } else {
+        response = 'Please specify recipient, subject, and message for the email.';
+      }
     } else {
       response = 'I heard you say: ' + command + '. Try asking about weather, playing music, searching YouTube, sending emails, or making calls.';
     }
@@ -63,6 +84,7 @@ const processCommand = async (command) => {
     await synthesizeSpeech(result.value);
   }
 };
+
 
 const fetchWithErrorHandling = async (url) => {
   try {
