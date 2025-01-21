@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
-const { externalService } = require('../../../backend/src/services/ServiceFactory.js');
+import externalService from '../../../backend/src/services/ServiceFactory.js';
 const inputField = ref('');
 const result = ref('');
 const isListening = ref(false);

@@ -1,16 +1,10 @@
-const WeatherService = require('./weather/WeatherService.js');
-const SpotifyService = require('./music/SpotifyService.js');
-const YouTubeService = require('./video/YouTubeService.js');
-
-const DatabaseService = require('./database/DatabaseService.js');
+import WeatherService from './weather/WeatherService.js';
+import SpotifyService from './music/SpotifyService.js';
+import YouTubeService from './video/YouTubeService.js';
+import DatabaseService from './database/DatabaseService.js';
 
 class ExternalService {
-  constructor(
-      weatherService,
-      spotifyService,
-      youtubeService,
-      databaseService
-  ) {
+  constructor(weatherService, spotifyService, youtubeService, databaseService) {
     this.weatherService = weatherService;
     this.spotifyService = spotifyService;
     this.youtubeService = youtubeService;
@@ -59,4 +53,4 @@ class ExternalService {
   }
 }
 
-module.exports = ExternalService;
+export default ExternalService;

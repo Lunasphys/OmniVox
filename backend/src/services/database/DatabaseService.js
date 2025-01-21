@@ -1,8 +1,8 @@
-const axios = require('axios');
+import axios from 'axios';
 
 class DatabaseService {
   constructor() {
-    this.apiUrl = 'http://localhost:30 00/api';
+    this.apiUrl = 'http://localhost:3000/api';
   }
 
   async addUser(username, email) {
@@ -73,4 +73,4 @@ class DatabaseService {
   }
 }
 
-module.exports = DatabaseService;
+export default DatabaseService;

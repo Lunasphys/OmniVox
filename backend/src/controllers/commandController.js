@@ -1,6 +1,6 @@
-const { pool } = require('../model/db.js');
+import pool from '../model/db.js';
 
-exports.logCommand = async (req, res) => {
+export const logCommand = async (req, res) => {
     const { userId, commandText, commandType, responseText } = req.body;
 
     if (!userId || !commandText || !commandType || !responseText) {
@@ -20,7 +20,7 @@ exports.logCommand = async (req, res) => {
     }
 };
 
-exports.getCommandHistory = async (req, res) => {
+export const getCommandHistory = async (req, res) => {
     const { userId } = req.params;
 
     if (!userId) {

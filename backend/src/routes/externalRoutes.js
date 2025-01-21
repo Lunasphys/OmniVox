@@ -1,5 +1,5 @@
-const express = require('express');
-const externalService = require('../services/ServiceFactory.js');
+import express from 'express';
+import externalService from '../services/ServiceFactory.js';
 
 const router = express.Router();
 
@@ -56,7 +56,6 @@ router.post('/database', async (req, res) => {
     }
 
     try {
-
         const insertId = await externalService.addUser(username, email);
         res.status(201).json({ message: 'Utilisateur ajouté avec succès.', insertId: insertId });
     } catch (error) {
@@ -94,4 +93,4 @@ router.post('/phone', (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

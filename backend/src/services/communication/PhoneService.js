@@ -9,8 +9,7 @@ class PhoneService {
         throw new Error('Invalid phone number format');
       }
 
-      // Simuler l'appel dans un environnement serveur (si nécessaire)
-      console.log(`Initiating call to: tel:${normalizedNumber}`);  // Log côté serveur
+      console.log(`Initiating call to: tel:${normalizedNumber}`);
 
       return `Appel en cours vers ${phoneNumber}`;
     } catch (error) {
@@ -20,4 +19,4 @@ class PhoneService {
   }
 }
 
-module.exports = { PhoneService };
+export default PhoneService;

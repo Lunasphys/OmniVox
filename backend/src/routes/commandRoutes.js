@@ -1,5 +1,5 @@
-const express = require('express');
-const { logCommand, getCommandHistory } = require('../controllers/commandController.js');
+import express from 'express';
+import { logCommand, getCommandHistory } from '../controllers/commandController.js';
 
 const router = express.Router();
 
@@ -17,4 +17,4 @@ router.post('/', logCommand);
  */
 router.get('/:userId', getCommandHistory);
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 class YouTubeService {
   constructor() {
@@ -18,7 +18,6 @@ class YouTubeService {
 
       const videoUrl = `https://www.youtube.com/watch?v=${video.id.videoId}`;
 
-      // Remplacer window.open par une méthode adaptée pour Node.js
       console.log(`Opening YouTube video: ${video.snippet.title}`);
       console.log(`Video URL: ${videoUrl}`);
 
@@ -30,4 +29,4 @@ class YouTubeService {
   }
 }
 
-module.exports = YouTubeService;
+export default YouTubeService;

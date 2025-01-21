@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 class SpotifyService {
   constructor() {
@@ -59,4 +59,4 @@ class SpotifyService {
   }
 }
 
-module.exports = SpotifyService;
+export default SpotifyService;
