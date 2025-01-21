@@ -28,9 +28,9 @@ class WeatherService {
       const { temp_c, feelslike_c, humidity, wind_kph, condition } = response.data.current;
       const description = condition.text;
 
-      return `À ${city}, il fait ${temp_c}°C (ressenti ${feelslike_c}°C). ${description}. Humidité: ${humidity}%, Vent: ${wind_kph} km/h.`;
+      return `In ${city}, it's ${temp_c}°C (feels like ${feelslike_c}°C). ${description}. Humidity: ${humidity}%, Wind: ${wind_kph} km/h.`;
     } catch (error) {
-      console.error('WeatherService Error:', error.response?.data || error.message); // Débogage
+      console.error('WeatherService Error:', error.response?.data || error.message);
       throw new Error('Could not fetch weather data.');
     }
   }

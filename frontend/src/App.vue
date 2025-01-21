@@ -15,6 +15,6 @@ import UserInterface from './components/UserInterface.vue'
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #52575e 0%, #4f545b 100%);
 }
 </style>

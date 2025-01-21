@@ -1,79 +1,166 @@
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --bg-color: #4d2828;
+  --text-color: #677aa6;
+  --accent-color: #495772;
+  --button-bg: #69788f;
+  --button-hover: #18243f;
+  --input-bg: #1e1e1e;
+  --result-bg: #1a1a1a;
+  --result-text: #c2baba;
+  --font-primary: 'Roboto', sans-serif;
+  --font-title: 'Lora', serif;
 }
 
 body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+}
+
+.voice-assistant {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--result-bg);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-primary);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.voice-assistant:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--accent-color);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.input-section {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+input {
+  flex: 1;
+  padding: 0.75rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  outline: none;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+input:focus {
+  box-shadow: 0 0 6px var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--button-bg);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: border-color 0.25s;
+  font-family: var(--font-primary);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
 }
 
-.card {
-  padding: 2em;
+button.listening {
+  background-color: #dc2626;
+  animation: pulse 1.5s infinite;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.result-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--result-bg);
+  border-radius: 6px;
+  color: var(--result-text);
+  font-family: var(--font-primary);
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+h3 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
   }
-  a:hover {
-    color: #747bff;
+  50% {
+    opacity: 0.7;
   }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .voice-assistant {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  input,
   button {
-    background-color: #f9f9f9;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .voice-assistant {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  button {
+    font-size: 0.85rem;
+    padding: 0.5rem;
   }
 }

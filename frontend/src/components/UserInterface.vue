@@ -110,8 +110,20 @@ const fetchWithErrorHandling = async (url, options = {}) => {
 </script>
 
 <template>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
   <div class="voice-assistant">
-    <h1>Voice Assistant</h1>
+    <h1>OMNIVOX</h1>
+
+    <div class="commands-section">
+      <h2>Available Commands:</h2>
+      <ul>
+        <li><strong>Weather:</strong> "What's the weather in <em>city</em>?"</li>
+        <li><strong>Spotify:</strong> "Search <em>song/artist</em> on Spotify."</li>
+        <li><strong>YouTube:</strong> "Search <em>video/topic</em> on YouTube."</li>
+        <li><strong>Email:</strong> "Send email to <em>recipient</em> with subject <em>subject</em> saying <em>message</em>."</li>
+      </ul>
+    </div>
 
     <div class="input-section">
       <input
@@ -124,10 +136,11 @@ const fetchWithErrorHandling = async (url, options = {}) => {
           @click="captureVoice"
           :class="{ 'listening': isListening }"
       >
-        {{ isListening ? 'Listening...' : 'Start Listening' }}
+        {{ isListening ? '🎙 Listening...' : '🎤 Start Listening' }}
       </button>
     </div>
 
+    <!-- Section pour afficher les réponses -->
     <div class="result-section" v-if="result">
       <h3>Response:</h3>
       <p>{{ result }}</p>
@@ -135,55 +148,46 @@ const fetchWithErrorHandling = async (url, options = {}) => {
   </div>
 </template>
 
+
 <style scoped>
-.voice-assistant {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.input-section {
-  display: flex;
-  gap: 1rem;
-  margin: 2rem 0;
-}
-
-input {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-button.listening {
-  background-color: #ff4444;
-  animation: pulse 1.5s infinite;
-}
-
-.result-section {
+.commands-section {
   margin-top: 2rem;
-  padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
+  padding: 1.5rem;
+  background-color: var(--result-bg);
+  color: var(--result-text);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { opacity: 1; }
+.commands-section h2 {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.commands-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.commands-section li {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.commands-section li strong {
+  color: var(--accent-color);
+}
+
+.commands-section li em {
+  font-style: italic;
+  color: var(--text-color);
 }
 </style>
+
+
+
+
+

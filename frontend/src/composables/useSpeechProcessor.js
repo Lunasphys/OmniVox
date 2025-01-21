@@ -8,7 +8,7 @@ export default function useSpeechProcessor() {
         return;
       }
 
-      // @ts-ignore - WebkitSpeechRecognition is not in the types
+      // @ts-ignore - WebkitSpeechRecognition
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
 
@@ -30,12 +30,13 @@ export default function useSpeechProcessor() {
   };
 
   const synthesizeSpeech = (text) => {
-    return new Promise((resolve, reject) => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.onend = () => resolve();
-      utterance.onerror = (event) => reject(event);
-      window.speechSynthesis.speak(utterance);
-    });
+    // return new Promise((resolve, reject) => {
+    //   const utterance = new SpeechSynthesisUtterance(text);
+    //   utterance.onend = () => resolve();
+    //   utterance.onerror = (event) => reject(event);
+    //   window.speechSynthesis.speak(utterance);
+    // });
+    return Promise.resolve(); // Elle m'a saoulé à parler
   };
 
   return {
