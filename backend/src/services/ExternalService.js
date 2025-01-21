@@ -23,7 +23,6 @@ class ExternalService {
     return this.youtubeService.searchAndPlay(query);
   }
 
-  // Ajouter la gestion des utilisateurs via DatabaseService
   async addUser(username, email) {
     return await this.databaseService.addUser(username, email);
   }

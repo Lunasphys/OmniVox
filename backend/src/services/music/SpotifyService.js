@@ -7,7 +7,6 @@ class SpotifyService {
     this.accessToken = null;
   }
 
-  // Méthode pour obtenir un token d'accès Spotify
   async getAccessToken() {
     if (this.accessToken) return this.accessToken;
 
@@ -33,7 +32,6 @@ class SpotifyService {
     }
   }
 
-  // Méthode pour rechercher et jouer un morceau
   async searchAndPlay(query) {
     try {
       const token = await this.getAccessToken();

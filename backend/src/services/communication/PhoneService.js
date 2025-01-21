@@ -1,10 +1,8 @@
 class PhoneService {
   makePhoneCall(phoneNumber) {
     try {
-      // Normalize phone number
       const normalizedNumber = phoneNumber.replace(/\s+/g, '');
 
-      // Check if the number is valid
       if (!/^\+?[\d-]+$/.test(normalizedNumber)) {
         throw new Error('Invalid phone number format');
       }

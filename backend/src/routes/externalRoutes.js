@@ -3,22 +3,25 @@ import externalService from '../services/ServiceFactory.js';
 
 const router = express.Router();
 
-// Route pour obtenir la météo
 router.get('/weather', async (req, res) => {
     const { city } = req.query;
+    console.log(`Weather request received for city: ${city}`); // Débogage
+
     if (!city) {
-        return res.status(400).json({ error: 'La ville est requise.' });
+        return res.status(400).json({ error: 'City parameter is required.' });
     }
 
     try {
-        const weatherData = await externalService.getWeather({ city });
+        const weatherData = await externalService.getWeather(city);
+        console.log('Weather data fetched successfully:', weatherData); // Débogage
+
         res.json({ message: weatherData });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error in /weather route:', error.message); // Débogage
+        res.status(500).json({ error: 'Failed to fetch weather data.' });
     }
 });
 
-// Route pour rechercher sur Spotify
 router.get('/spotify', async (req, res) => {
     const { query } = req.query;
     if (!query) {
@@ -33,7 +36,6 @@ router.get('/spotify', async (req, res) => {
     }
 });
 
-// Route pour rechercher sur YouTube
 router.get('/youtube', async (req, res) => {
     const { query } = req.query;
     if (!query) {
@@ -63,7 +65,6 @@ router.post('/database', async (req, res) => {
     }
 });
 
-// Route pour envoyer un email
 router.post('/email', async (req, res) => {
     const { to, subject, message } = req.body;
     if (!to || !subject || !message) {
@@ -78,7 +79,6 @@ router.post('/email', async (req, res) => {
     }
 });
 
-// Route pour passer un appel téléphonique
 router.post('/phone', (req, res) => {
     const { phoneNumber } = req.body;
     if (!phoneNumber) {

@@ -4,28 +4,33 @@ class WeatherService {
   constructor() {
     this.apiKey = process.env.WEATHER_API_KEY;
     this.baseWeatherUrl = 'https://api.weatherapi.com/v1/current.json';
+    console.log('Weather API Key:', this.apiKey);
   }
 
   async getWeather(city) {
     try {
-      const weatherResponse = await axios.get(this.baseWeatherUrl, {
+      console.log(`Fetching weather for city: ${city}`); // Débogage
+
+      const response = await axios.get(this.baseWeatherUrl, {
         params: {
           key: this.apiKey,
           q: city,
-          lang: 'fr',
+          aqi: 'no',
         },
       });
 
-      if (!weatherResponse.data || !weatherResponse.data.current) {
-        throw new Error(`City "${city}" not found.`);
+      console.log('Weather API Response:', response.data); // Débogage
+
+      if (!response.data || !response.data.current) {
+        throw new Error(`Weather data not found for city: ${city}`);
       }
 
-      const { temp_c, feelslike_c, humidity, wind_kph, condition } = weatherResponse.data.current;
+      const { temp_c, feelslike_c, humidity, wind_kph, condition } = response.data.current;
       const description = condition.text;
 
-      return `À ${city}, il fait ${Math.round(temp_c)}°C (ressenti ${Math.round(feelslike_c)}°C). ${description}. Humidité: ${humidity}%, Vent: ${Math.round(wind_kph)} km/h.`;
+      return `À ${city}, il fait ${temp_c}°C (ressenti ${feelslike_c}°C). ${description}. Humidité: ${humidity}%, Vent: ${wind_kph} km/h.`;
     } catch (error) {
-      console.error('WeatherService Error:', error);
+      console.error('WeatherService Error:', error.response?.data || error.message); // Débogage
       throw new Error('Could not fetch weather data.');
     }
   }

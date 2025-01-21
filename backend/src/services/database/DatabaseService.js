@@ -18,7 +18,7 @@ class DatabaseService {
   async getUsers() {
     try {
       const response = await axios.get(`${this.apiUrl}/users`);
-      return response.data; // Retourne les données des utilisateurs
+      return response.data;
     } catch (error) {
       console.error('Failed to fetch users:', error);
       throw new Error('Could not fetch users');
@@ -42,7 +42,7 @@ class DatabaseService {
   async getCommandHistory(userId) {
     try {
       const response = await axios.get(`${this.apiUrl}/commands`, { params: { userId } });
-      return response.data; // Retourne l'historique des commandes
+      return response.data;
     } catch (error) {
       console.error('Failed to fetch command history:', error);
       throw new Error('Could not fetch command history');

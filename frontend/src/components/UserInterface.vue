@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
-import externalService from '../../../backend/src/services/ServiceFactory.js';
 const inputField = ref('');
 const result = ref('');
 const isListening = ref(false);
@@ -28,57 +27,31 @@ const processCommand = async (command) => {
   let response = '';
 
   try {
-    // Weather commands
     if (lowerCommand.includes('weather')) {
       const cityMatch = command.match(/weather (?:in|at|for)? (.+)/i);
       if (cityMatch) {
-        response = await externalService.getWeather(cityMatch[1]);
+        const res = await fetchWithErrorHandling(`http://localhost:3000/api/weather?city=${cityMatch[1]}`);
+        response = res.message || 'Weather data unavailable.';
       } else {
         response = 'Please specify a city for weather information.';
       }
-    }
-    // Music commands
-    else if (lowerCommand.includes('play') && lowerCommand.includes('spotify')) {
+    } else if (lowerCommand.includes('play') && lowerCommand.includes('spotify')) {
       const songMatch = command.match(/play (.+) on spotify/i);
       if (songMatch) {
-        response = await externalService.searchSpotify(songMatch[1]);
+        const res = await fetchWithErrorHandling(`http://localhost:3000/api/spotify?query=${songMatch[1]}`);
+        response = res.message || 'Spotify data unavailable.';
       } else {
         response = 'Please specify a song to play on Spotify.';
       }
-    }
-    // YouTube commands
-    else if (lowerCommand.includes('youtube')) {
+    } else if (lowerCommand.includes('youtube')) {
       const videoMatch = command.match(/(?:search|play|find) (.+) on youtube/i);
       if (videoMatch) {
-        response = await externalService.searchYouTube(videoMatch[1]);
+        const res = await fetchWithErrorHandling(`http://localhost:3000/api/youtube?query=${videoMatch[1]}`);
+        response = res.message || 'YouTube data unavailable.';
       } else {
         response = 'Please specify what to search on YouTube.';
       }
-    }
-    // Email commands
-    else if (lowerCommand.includes('email') || lowerCommand.includes('send mail')) {
-      const emailMatch = command.match(/send (?:email|mail) to (.+) (?:with subject|about) (.+) (?:saying|with message) (.+)/i);
-      if (emailMatch) {
-        response = await externalService.sendEmail(emailMatch[1], emailMatch[2], emailMatch[3]);
-      } else {
-        response = 'Please specify recipient, subject, and message for the email.';
-      }
-    }
-    // Phone call commands
-    else if (lowerCommand.includes('call')) {
-      const phoneMatch = command.match(/call (\+?[\d\s-]+)/);
-      if (phoneMatch) {
-        response = externalService.makePhoneCall(phoneMatch[1]);
-      } else {
-        response = 'Please specify a phone number to call.';
-      }
-    }
-    // Default greeting
-    else if (lowerCommand.includes('hello') || lowerCommand.includes('hi')) {
-      response = 'Hello! How can I help you today?';
-    }
-    // Unknown command
-    else {
+    } else {
       response = 'I heard you say: ' + command + '. Try asking about weather, playing music, searching YouTube, sending emails, or making calls.';
     }
 
@@ -90,6 +63,27 @@ const processCommand = async (command) => {
     await synthesizeSpeech(result.value);
   }
 };
+
+const fetchWithErrorHandling = async (url) => {
+  try {
+    console.log(`Sending request to: ${url}`); // Débogage
+
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log('Response from backend:', data); // Débogage
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error); // Débogage
+    throw error;
+  }
+};
+
+
+
 </script>
 
 <template>
