@@ -35,19 +35,11 @@ const processCommand = async (command) => {
       } else {
         response = 'Please specify a city for weather information.';
       }
-    } else if (lowerCommand.includes('play') && lowerCommand.includes('spotify')) {
-      const songMatch = command.match(/play (.+) on spotify/i);
-      if (songMatch) {
-        const res = await fetchWithErrorHandling(`http://localhost:3000/api/spotify?query=${songMatch[1]}`);
-        response = res.message || 'Spotify data unavailable.';
-      } else {
-        response = 'Please specify a song to play on Spotify.';
-      }
     } else if (lowerCommand.includes('youtube')) {
       const videoMatch = command.match(/(?:search|play|find) (.+) on youtube/i);
       if (videoMatch) {
-        const res = await fetchWithErrorHandling(`http://localhost:3000/api/youtube?query=${videoMatch[1]}`);
-        response = res.message || 'YouTube data unavailable.';
+        const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(videoMatch[1])}`;
+        window.location.href = searchUrl; // Redirige directement l'utilisateur
       } else {
         response = 'Please specify what to search on YouTube.';
       }

@@ -36,18 +36,16 @@ router.get('/spotify', async (req, res) => {
     }
 });
 
-router.get('/youtube', async (req, res) => {
+router.get('/youtube', (req, res) => {
     const { query } = req.query;
+
     if (!query) {
-        return res.status(400).json({ error: 'La requête est requise.' });
+        return res.status(400).json({ error: 'The query parameter is required.' });
     }
 
-    try {
-        const youtubeData = await externalService.searchYouTube({ query });
-        res.json({ message: youtubeData });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+    const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+    console.log(`Redirecting to YouTube search URL: ${searchUrl}`);
+    res.redirect(searchUrl);
 });
 
 router.post('/database', async (req, res) => {

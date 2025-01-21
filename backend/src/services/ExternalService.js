@@ -21,7 +21,7 @@ class ExternalService {
     return this.spotifyService.searchAndPlay(query);
   }
 
-  async searchYouTube(query) {
+  async searchAndPlay(query) {
     return this.youtubeService.searchAndPlay(query);
   }
 
