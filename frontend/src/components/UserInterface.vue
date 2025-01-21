@@ -1,12 +1,12 @@
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
 const inputField = ref('');
 const result = ref('');
 const isListening = ref(false);
 
-const {recognizeSpeech, synthesizeSpeech} = useSpeechProcessor();
+const { recognizeSpeech, synthesizeSpeech } = useSpeechProcessor();
 
 const captureVoice = async () => {
   isListening.value = true;
@@ -40,7 +40,7 @@ const processCommand = async (command) => {
       if (musicMatch) {
         const searchQuery = encodeURIComponent(musicMatch[1]);
         const spotifyUrl = `https://open.spotify.com/search/${searchQuery}`;
-        window.location.href = spotifyUrl; // Redirige directement l'utilisateur vers Spotify
+        window.location.href = spotifyUrl;
       } else {
         response = 'Please specify what to search on Spotify.';
       }
@@ -53,12 +53,16 @@ const processCommand = async (command) => {
         response = 'Please specify what to search on YouTube.';
       }
     } else if (lowerCommand.includes('email') || lowerCommand.includes('send mail')) {
-      // Correspondance pour l'email
       const emailMatch = command.match(/send (?:email|mail) to (.+) (?:with subject|about) (.+) (?:saying|with message) (.+)/i);
+
       if (emailMatch) {
-        const to = emailMatch[1];
-        const subject = emailMatch[2];
-        const message = emailMatch[3];
+        const to = emailMatch[1]
+            .trim()
+            .replace(/\s+/g, ' ')
+            .replace(/\sat\s/gi, '@')
+            .replace(/\sdot\s/gi, '.');
+        const subject = emailMatch[2].trim();
+        const message = emailMatch[3].trim();
 
         // Appel à l'API backend pour envoyer l'email
         const res = await fetchWithErrorHandling(`http://localhost:3000/api/email`, {
@@ -66,7 +70,7 @@ const processCommand = async (command) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({to, subject, message}),
+          body: JSON.stringify({ to, subject, message }),
         });
 
         response = res.message || `Email sent to ${to}.`;
@@ -86,12 +90,11 @@ const processCommand = async (command) => {
   }
 };
 
-
-const fetchWithErrorHandling = async (url) => {
+const fetchWithErrorHandling = async (url, options = {}) => {
   try {
-    console.log(`Sending request to: ${url}`); // Débogage
+    console.log(`Sending request to: ${url}`, options); // Débogage
 
-    const res = await fetch(url);
+    const res = await fetch(url, options);
     if (!res.ok) {
       throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
     }
@@ -104,8 +107,6 @@ const fetchWithErrorHandling = async (url) => {
     throw error;
   }
 };
-
-
 </script>
 
 <template>
@@ -180,34 +181,9 @@ button.listening {
   border-radius: 4px;
 }
 
-.help-section {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-
-.help-section ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.help-section li {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  background-color: white;
-  border-radius: 4px;
-}
-
 @keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
 }
 </style>

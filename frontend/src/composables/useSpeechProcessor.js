@@ -41,6 +41,6 @@ export default function useSpeechProcessor() {
   return {
     recognizeSpeech,
     synthesizeSpeech,
-    isSupported
+    isSupported,
   };
 }

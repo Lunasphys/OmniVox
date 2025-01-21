@@ -65,29 +65,21 @@ router.post('/database', async (req, res) => {
 
 router.post('/email', async (req, res) => {
     const { to, subject, message } = req.body;
+
+    console.log('Received email request:', { to, subject, message });
+
     if (!to || !subject || !message) {
-        return res.status(400).json({ error: 'Tous les champs sont requis.' });
+        console.error('Missing fields in request body:', { to, subject, message });
+        return res.status(400).json({ error: 'All fields are required.' });
     }
 
     try {
         const emailResponse = await externalService.sendEmail(to, subject, message);
+        console.log('Email sent successfully:', emailResponse);
         res.json({ message: emailResponse });
     } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-router.post('/phone', (req, res) => {
-    const { phoneNumber } = req.body;
-    if (!phoneNumber) {
-        return res.status(400).json({ error: 'Le numéro de téléphone est requis.' });
-    }
-
-    try {
-        const callResponse = externalService.makePhoneCall(phoneNumber);
-        res.json({ message: callResponse });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error sending email:', error); // Log les erreurs
+        res.status(500).json({ error: 'Failed to send email.' });
     }
 });
 
