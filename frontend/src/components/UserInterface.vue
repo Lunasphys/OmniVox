@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
 const inputField = ref('');
 const result = ref('');
 const isListening = ref(false);
 
-const { recognizeSpeech, synthesizeSpeech } = useSpeechProcessor();
+const {recognizeSpeech, synthesizeSpeech} = useSpeechProcessor();
 
 const captureVoice = async () => {
   isListening.value = true;
@@ -35,6 +35,15 @@ const processCommand = async (command) => {
       } else {
         response = 'Please specify a city for weather information.';
       }
+    } else if (lowerCommand.includes('spotify')) {
+      const musicMatch = command.match(/(?:search|play|find) (.+) on spotify/i);
+      if (musicMatch) {
+        const searchQuery = encodeURIComponent(musicMatch[1]);
+        const spotifyUrl = `https://open.spotify.com/search/${searchQuery}`;
+        window.location.href = spotifyUrl; // Redirige directement l'utilisateur vers Spotify
+      } else {
+        response = 'Please specify what to search on Spotify.';
+      }
     } else if (lowerCommand.includes('youtube')) {
       const videoMatch = command.match(/(?:search|play|find) (.+) on youtube/i);
       if (videoMatch) {
@@ -57,7 +66,7 @@ const processCommand = async (command) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ to, subject, message }),
+          body: JSON.stringify({to, subject, message}),
         });
 
         response = res.message || `Email sent to ${to}.`;
@@ -95,7 +104,6 @@ const fetchWithErrorHandling = async (url) => {
     throw error;
   }
 };
-
 
 
 </script>
@@ -192,8 +200,14 @@ button.listening {
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.7; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

@@ -2,9 +2,9 @@ import axios from 'axios';
 
 class SpotifyService {
   constructor() {
-    this.clientId = '701d9b68abca40128a780dca589b34a5';
-    this.clientSecret = 'a41cfee634c64377a4d2fbeee8d2805b';
-    this.accessToken = 'BQAkfGgYZS1eKkddVWP73d7dpPmV5FVYcZDTYUNJuW21K2BN3nfwG9hsQ8k6Ew0ERLTwk9ETQ5jFj2MG7sSgmvJ1bLYXIwQ_j7Mt-9gxotoHT5GspA0'
+    this.clientId = process.env.SPOTIFY_CLIENT_ID;
+    this.clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+    this.accessToken = process.env.SPOTIFY_ACCESS_TOKEN;
   }
 
   async getAccessToken() {
