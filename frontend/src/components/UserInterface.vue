@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import { handleWeatherCommand } from '../handlers/weatherHandler.js';
+import { handleSpotifyCommand } from '../handlers/spotifyHandler.js';
+import { handleYouTubeCommand } from '../handlers/youtubeHandler.js';
+import { handleEmailCommand } from '../handlers/emailHandler.js';
+import { handleDefaultCommand } from '../handlers/defaultHandler.js';
 import useSpeechProcessor from '../composables/useSpeechProcessor.js';
 
 const inputField = ref('');
@@ -22,91 +27,30 @@ const captureVoice = async () => {
   }
 };
 
+// Gestion des commandes vocales
 const processCommand = async (command) => {
   const lowerCommand = command.toLowerCase();
   let response = '';
 
   try {
     if (lowerCommand.includes('weather')) {
-      const cityMatch = command.match(/weather (?:in|at|for)? (.+)/i);
-      if (cityMatch) {
-        const res = await fetchWithErrorHandling(`http://localhost:3000/api/weather?city=${cityMatch[1]}`);
-        response = res.message || 'Weather data unavailable.';
-      } else {
-        response = 'Please specify a city for weather information.';
-      }
+      response = await handleWeatherCommand(command);
     } else if (lowerCommand.includes('spotify')) {
-      const musicMatch = command.match(/(?:search|play|find) (.+) on spotify/i);
-      if (musicMatch) {
-        const searchQuery = encodeURIComponent(musicMatch[1]);
-        const spotifyUrl = `https://open.spotify.com/search/${searchQuery}`;
-        window.location.href = spotifyUrl;
-      } else {
-        response = 'Please specify what to search on Spotify.';
-      }
+      response = handleSpotifyCommand(command);
     } else if (lowerCommand.includes('youtube')) {
-      const videoMatch = command.match(/(?:search|play|find) (.+) on youtube/i);
-      if (videoMatch) {
-        const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(videoMatch[1])}`;
-        window.location.href = searchUrl; // Redirige directement l'utilisateur
-      } else {
-        response = 'Please specify what to search on YouTube.';
-      }
+      response = handleYouTubeCommand(command);
     } else if (lowerCommand.includes('email') || lowerCommand.includes('send mail')) {
-      const emailMatch = command.match(/send (?:email|mail) to (.+) (?:with subject|about) (.+) (?:saying|with message) (.+)/i);
-
-      if (emailMatch) {
-        const to = emailMatch[1]
-            .trim()
-            .replace(/\s+/g, ' ')
-            .replace(/\sat\s/gi, '@')
-            .replace(/\sdot\s/gi, '.');
-        const subject = emailMatch[2].trim();
-        const message = emailMatch[3].trim();
-
-        // Appel à l'API backend pour envoyer l'email
-        const res = await fetchWithErrorHandling(`http://localhost:3000/api/email`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ to, subject, message }),
-        });
-
-        response = res.message || `Email sent to ${to}.`;
-      } else {
-        response = 'Please specify recipient, subject, and message for the email.';
-      }
+      response = await handleEmailCommand(command);
     } else {
-      response = 'I heard you say: ' + command + '. Try asking about weather, playing music, searching YouTube, sending emails, or making calls.';
+      response = handleDefaultCommand(command);
     }
-
     result.value = response;
-    await synthesizeSpeech(response);
   } catch (error) {
     console.error('Command processing error:', error);
     result.value = 'Sorry, there was an error processing your request.';
-    await synthesizeSpeech(result.value);
   }
 };
 
-const fetchWithErrorHandling = async (url, options = {}) => {
-  try {
-    console.log(`Sending request to: ${url}`, options); // Débogage
-
-    const res = await fetch(url, options);
-    if (!res.ok) {
-      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
-    }
-
-    const data = await res.json();
-    console.log('Response from backend:', data); // Débogage
-    return data;
-  } catch (error) {
-    console.error('Fetch error:', error); // Débogage
-    throw error;
-  }
-};
 </script>
 
 <template>
@@ -140,7 +84,6 @@ const fetchWithErrorHandling = async (url, options = {}) => {
       </button>
     </div>
 
-    <!-- Section pour afficher les réponses -->
     <div class="result-section" v-if="result">
       <h3>Response:</h3>
       <p>{{ result }}</p>
