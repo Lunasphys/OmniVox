@@ -2,13 +2,15 @@ import WeatherService from './weather/WeatherService.js';
 import SpotifyService from './music/SpotifyService.js';
 import YouTubeService from './video/YouTubeService.js';
 import DatabaseService from './database/DatabaseService.js';
+import EmailService from "./communication/EmailService.js";
 
 class ExternalService {
-  constructor(weatherService, spotifyService, youtubeService, databaseService) {
+  constructor(weatherService, spotifyService, youtubeService, databaseService, emailService) {
     this.weatherService = weatherService;
     this.spotifyService = spotifyService;
     this.youtubeService = youtubeService;
     this.databaseService = databaseService;
+    this.emailService = emailService;
   }
 
   async getWeather(city) {
@@ -25,6 +27,15 @@ class ExternalService {
 
   async addUser(username, email) {
     return await this.databaseService.addUser(username, email);
+  }
+
+  async sendEmail(to, subject, message) {
+    try {
+      return await this.emailService.sendEmail(to, subject, message);
+    } catch (error) {
+      console.error('Error in ExternalService sendEmail:', error.message);
+      throw error;
+    }
   }
 
   async getUsers() {

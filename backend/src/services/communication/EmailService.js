@@ -2,9 +2,9 @@ import emailjs from '@emailjs/browser';
 
 class EmailService {
     constructor() {
-        this.publicKey = 'YOUR_EMAILJS_PUBLIC_KEY';
-        this.serviceId = 'YOUR_EMAILJS_SERVICE_ID';
-        this.templateId = 'YOUR_EMAILJS_TEMPLATE_ID';
+        this.publicKey = process.env.EMAILJS_PUBLIC_KEY;
+        this.serviceId = process.env.EMAILJS_SERVICE_ID;
+        this.templateId = process.env.EMAILJS_TEMPLATE_ID;
     }
 
     async sendEmail(to, subject, message) {
@@ -17,9 +17,7 @@ class EmailService {
                     subject: subject,
                     message: message,
                 },
-                {
-                    publicKey: this.publicKey,
-                }
+                this.publicKey
             );
             return `Email envoyé à ${to}`;
         } catch (error) {
