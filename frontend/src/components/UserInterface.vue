@@ -80,6 +80,16 @@ const processCommand = async (command) => {
   }
 };
 
+const handleFeedback = (type) => {
+  if (type === 'like') {
+    console.log('User liked the response');
+    // Envoyer le feedback "like" au backend
+  } else if (type === 'dislike') {
+    console.log('User disliked the response');
+    // Envoyer le feedback "dislike" au backend
+  }
+};
+
 </script>
 
 <template>
@@ -117,6 +127,16 @@ const processCommand = async (command) => {
       <h3>Response:</h3>
       <p>{{ result }}</p>
     </div>
+
+    <!-- Boutons de satisfaction -->
+      <div class="feedback-buttons">
+        <button class="feedback-button like" @click="handleFeedback('like')">
+          👍 Like
+        </button>
+        <button class="feedback-button dislike" @click="handleFeedback('dislike')">
+          👎 Dislike
+        </button>
+      </div>
   </div>
 </template>
 
@@ -156,6 +176,51 @@ const processCommand = async (command) => {
 .commands-section li em {
   font-style: italic;
   color: var(--text-color);
+}
+
+/* Styles pour les boutons de feedback */
+.feedback-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.feedback-button {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.feedback-button.like {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+}
+
+.feedback-button.like:hover {
+  background-color: #45a049; /* Vert plus foncé */
+}
+
+.feedback-button.dislike {
+  background-color: #ff4444; /* Rouge */
+  color: white;
+}
+
+.feedback-button.dislike:hover {
+  background-color: #cc0000; /* Rouge plus foncé */
+}
+
+/* Animation de pulsation pour le bouton en mode écoute */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
 }
 </style>
 
